@@ -1,0 +1,44 @@
+<html>
+<head>
+    
+</head>
+<body>
+    <h1 id="stats"></h1>
+    <div style="display: flex; flex-direction: row;">
+        <div id="character" style="display: flex; flex-direction: column; margin: 2% auto;">
+            <p style="color: red;border: 2px black;" id="character_atk"></p>
+            <img class="character_img" style="width: 15%;" src="assets/img/character.jpg" alt="">
+            <p id="character_name"></p>
+            <p id="character_HP">00/00 HP</p>
+            <p id="character_weapon">weapon: ???</p>
+        </div>
+        <div id="enemy" style="display: flex; flex-direction: column; margin: 2% auto;">
+            <p id="enemy_atk"></p>
+            <img class="enemy_img"  style="width: 15%; " src="assets/img/character.jpg" alt="">
+            <p id="enemy_name"></p>
+            <p id="enemy_HP">00/00 HP</p>
+            <p id="enemy_weapon">weapon: ???</p>
+        </div>
+    </div>
+
+    <div style="display: flex; flex-direction: row;">
+        <button id="button_play" onclick="play()">Play</button>
+        <div>
+            <input type="checkbox" onclick="changeSpeed('low')" name="speed_battle[]" class="speed_button" value="low" checked>Speed x1</input>
+            <input type="checkbox" onclick="changeSpeed('normal')" name="speed_battle[]" class="speed_button" value="normal">Speed x2</input>
+            <input type="checkbox" onclick="changeSpeed('fast')" name="speed_battle[]" class="speed_button" value="fast">Speed x3</input>
+            <button onclick="skip()" class="speed_button">Skip</button>
+        </div>
+    </div>
+    
+    <div style="display: flex; flex-direction: row;">
+        <button onclick="changeFight('previous')">◄</button>
+        <button onclick="changeFight('next')">►</button>
+        <h2 id="labelFight">0/0</h2>
+    </div>
+
+    <p id="json"></p>
+    <script src="assets/js/battle.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>
