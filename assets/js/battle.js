@@ -38,6 +38,7 @@ let indexFight;
 let player;
 let enemy;
 let seconds = 1000;
+let sounds =true;
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -45,33 +46,80 @@ function sleep(ms) {
 
 async function battle(attacker=character,defender=character,historyAttack){
     changeSpeed(sessionStorage.getItem('speedGame'));
+    
+    attacker.img.style.filter="saturate(100%) blur(0px) brightness(1) contrast(100%)"
+    defender.img.style.filter="saturate(100%) blur(0px) brightness(1) contrast(100%)"
+
     for(let atk = 0; atk < historyAttack.length;atk++){
 
         defender.labelATK.innerHTML = ("-"+historyAttack[atk]);
+        defender.labelATK.style.scale = 1.1;
+        defender.labelATK.style.filter="opacity(1)";
+        soundMelee();
+
         defender.currentHP -= parseInt(historyAttack[atk]);
         if (defender.currentHP < 1){
+            defender.img.style.transform="rotate(360deg)";
+            defender.img.style.filter= "grayscale(200%)";
+            defender.img.style.scale=0.8;
+            attacker.img.style.scale=1;
+
             defender.barHP.innerHTML= "0/"+defender.maxHP+" <strong>HP</strong>";
             alert(attacker.NAME+" is winner");
             break;
         }
-        defender.barHP.innerHTML= defender.currentHP+"/"+defender.maxHP+" <strong>HP</strong>";
         
+        defender.img.style.scale=0.8;
+        attacker.img.style.transform="rotate(360deg)";
+        attacker.img.style.scale=2;
+        defender.img.style.filter="saturate(300%) blur(2px) brightness(1.25) contrast(60%)"
+        
+        defender.barHP.innerHTML= defender.currentHP+"/"+defender.maxHP+" <strong>HP</strong>";
         await sleep(seconds);
+        defender.labelATK.style.scale = 1;
+        defender.labelATK.style.filter="opacity(0)";
+        
+        attacker.img.style.transform="rotate(0deg)";
+        defender.img.style.filter="saturate(100%) blur(0px) brightness(1) contrast(100%)"
+        defender.img.style.scale=1;
+        
         defender.labelATK.innerHTML = ""
         atk++;
 
         attacker.labelATK.innerHTML = "-"+ historyAttack[atk];
+        attacker.labelATK.style.scale = 1.1;
+        attacker.labelATK.style.filter="opacity(1)";
+        soundMelee();
+
         attacker.currentHP -= historyAttack[atk];
         if (attacker.currentHP < 1){
+            attacker.img.style.transform="rotate(360deg)";
+            attacker.img.style.filter= "grayscale(200%)";
+            attacker.img.style.scale=0.8;
+            defender.img.style.scale=1;
+
             attacker.barHP.innerHTML= "0/"+attacker.maxHP+" <strong>HP</strong>";
             alert(defender.NAME+" is winner");
             break;
         }
+        attacker.img.style.scale=0.8;
+        defender.img.style.scale=2;
+        defender.img.style.transform="rotate(360deg)";
+        attacker.img.style.filter="saturate(300%) blur(2px) brightness(1.25) contrast(60%)"
+
         attacker.barHP.innerHTML=attacker.currentHP+"/"+attacker.maxHP+" <strong>HP</strong>";
-        
+
         await sleep(seconds);
+        attacker.labelATK.style.scale = 1;
+        attacker.labelATK.style.filter="opacity(0)";
+
+        defender.img.style.transform="rotate(0deg)";
+        attacker.img.style.filter="saturate(100%) blur(0px) brightness(1) contrast(100%)"
+        defender.img.style.scale=1;
         attacker.labelATK.innerHTML = ""
     }
+    attacker.labelATK.innerHTML = ""
+    defender.labelATK.innerHTML = ""
 } 
 
 window.onload = () => {
@@ -200,4 +248,28 @@ function changeFight(value){
     }
     initialBattle();
     document.getElementById('labelFight').innerText= ((indexFight+1)+"/"+ (fightingReport['fightingReports'].length));
+}
+
+function soundMelee(){
+    if (sounds){
+        let sounds =[];
+        sounds.push('../assets/sound/animal melee sound.wav');
+        sounds.push('../assets/sound/melee sound.wav');
+        sounds.push('../assets/sound/sword sound.wav');
+    
+        const random = Math.floor(Math.random() * sounds.length);
+        console.log(random, sounds[random]);
+        var audio = new Audio(sounds[random]);
+        audio.play()
+    }
+}
+
+function withSound(){
+    if (sounds){
+        sounds=false;
+        document.getElementById('button_sound').innerText="🔇";
+    } else {
+        sounds=true;
+        document.getElementById('button_sound').innerText="🔊";
+    }
 }

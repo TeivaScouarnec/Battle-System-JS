@@ -1,20 +1,26 @@
 <html>
 <head>
-    
+    <style>
+        .atk{
+            text-shadow: 1px 0 0 black, 1px 1px 0 black, 0 1px 0 black, -1px 1px 0 black, -1px 0 0 black, -1px -1px 0 black, 0 -1px 0 black, 1px -1px 0 black;
+            font-size: 2em;
+            filter: opacity(0);
+        }
+    </style>
 </head>
-<body>
+<body style="width: 90%; margin: 0 auto">
     <h1 id="stats"></h1>
     <div style="display: flex; flex-direction: row;">
         <div id="character" style="display: flex; flex-direction: column; margin: 2% auto;">
-            <p style="color: red;border: 2px black;" id="character_atk"></p>
-            <img class="character_img" style="width: 15%;" src="assets/img/character.jpg" alt="">
+            <p class="atk" style=" z-index:2; color: red; transition: 0.5s;" id="character_atk"></p>
+            <img id="character_img" style="width: 15%; transition: 0.5s;" src="assets/img/character.jpg" alt="">
             <p id="character_name"></p>
             <p id="character_HP">00/00 HP</p>
             <p id="character_weapon">weapon: ???</p>
         </div>
         <div id="enemy" style="display: flex; flex-direction: column; margin: 2% auto;">
-            <p id="enemy_atk"></p>
-            <img class="enemy_img"  style="width: 15%; " src="assets/img/character.jpg" alt="">
+            <p class="atk" style=" z-index:2; color: red; transition: 0.5s;" id="enemy_atk"></p>
+            <img id="enemy_img"  style="width: 15%; transition: 0.5s; " src="assets/img/character.jpg" alt="">
             <p id="enemy_name"></p>
             <p id="enemy_HP">00/00 HP</p>
             <p id="enemy_weapon">weapon: ???</p>
@@ -29,6 +35,7 @@
             <input type="checkbox" onclick="changeSpeed('fast')" name="speed_battle[]" class="speed_button" value="fast">Speed x3</input>
             <button onclick="skip()" class="speed_button">Skip</button>
         </div>
+        <button id="button_sound" onclick="withSound()">🔊</button>
     </div>
     
     <div style="display: flex; flex-direction: row;">
